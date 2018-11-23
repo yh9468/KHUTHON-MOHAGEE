@@ -25,6 +25,9 @@
         <item
             android:id="@+id/menu_custom_list"
             android:title="커스텀 경로 보기" />
+        <item
+            android:id="@+id/menu_chatting"
+            android:title="채팅채팅" />
     </group>
 
 </menu>

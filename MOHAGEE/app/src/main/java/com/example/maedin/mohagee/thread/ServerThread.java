@@ -16,6 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -31,6 +32,7 @@ public class ServerThread extends Thread{
     private String locationText;
     private String customName, customId;
     private String lat, lon, range, category;
+    private ArrayList<String> arrayList;
 
 
     private ServerThread()  {}  //private 생성자
@@ -131,6 +133,12 @@ public class ServerThread extends Thread{
 
     public void setSearchName(String locationText, String myResult){
         this.locationText = locationText;
+        this.myResult = myResult;
+    }
+    public void setAddroom(ArrayList<String> strings, String name, String myResult)
+    {
+        arrayList = strings;
+        nameText = name;
         this.myResult = myResult;
     }
 
@@ -760,9 +768,78 @@ public class ServerThread extends Thread{
                             e.printStackTrace();
                         }
                         break;
+                    case 17: // 채팅방 보기
+                        try {
+                            URL url = new URL("http://163.180.116.251:8080/mohagi/home");
+                            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+
+                            http.setDefaultUseCaches(false);
+                            http.setDoInput(true);
+                            http.setDoOutput(true);
+                            http.setRequestMethod("POST");
+
+                            http.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+
+                            StringBuffer buffer = new StringBuffer();
+                            buffer.append("user_id").append("=").append(idText).append("&");
+                            buffer.append("loc_id").append("=").append(locationKey);
+
+
+                            InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "UTF-8");
+                            BufferedReader reader = new BufferedReader(tmp);
+                            StringBuilder builder = new StringBuilder();
+                            String str;
+                            while ((str = reader.readLine()) != null) {       // 서버에서 라인단위로 보내줄 것이므로 라인단위로 읽는다
+                                builder.append(str + "\n");                     // View에 표시하기 위해 라인 구분자 추가
+                            }
+                            myResult = builder.toString();
+                            retMsg.obj = myResult;
+                            fgHandler.sendMessage(retMsg);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case 18:
+                        try {
+
+                            URL url = new URL("http://163.180.116.251:8080/mohagi/home");
+                            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+
+                            http.setDefaultUseCaches(false);
+                            http.setDoInput(true);
+                            http.setDoOutput(true);
+                            http.setRequestMethod("POST");
+
+                            http.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+
+                            StringBuffer buffer = new StringBuffer();
+                            buffer.append("user_id").append("=").append(arrayList).append("&");
+                            buffer.append("chat_name").append("=").append(nameText);
+
+
+                            InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "UTF-8");
+                            BufferedReader reader = new BufferedReader(tmp);
+                            StringBuilder builder = new StringBuilder();
+                            String str;
+                            while ((str = reader.readLine()) != null) {       // 서버에서 라인단위로 보내줄 것이므로 라인단위로 읽는다
+                                builder.append(str + "\n");                     // View에 표시하기 위해 라인 구분자 추가
+                            }
+                            myResult = builder.toString();
+                            retMsg.obj = myResult;
+                            fgHandler.sendMessage(retMsg);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
                 }
 
             }
+
+
         };
         Looper.loop();
     }

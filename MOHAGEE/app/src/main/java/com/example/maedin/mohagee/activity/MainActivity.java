@@ -19,16 +19,14 @@ import android.widget.TextView;
 import com.example.maedin.mohagee.R;
 import com.example.maedin.mohagee.application.App;
 import com.example.maedin.mohagee.fragment.CategoryFragment;
+import com.example.maedin.mohagee.fragment.ChattingRoomFragment;
 import com.example.maedin.mohagee.fragment.CourseSwapViewFragment;
 import com.example.maedin.mohagee.fragment.CustomFragment;
-import com.example.maedin.mohagee.fragment.CustomPathFragment;
-import com.example.maedin.mohagee.fragment.FragmentSearchName;
 import com.example.maedin.mohagee.fragment.HomeFragment;
 import com.example.maedin.mohagee.fragment.MypageFragmet;
 import com.example.maedin.mohagee.fragment.PlaceFragment;
 import com.example.maedin.mohagee.fragment.SearchFragment;
 import com.example.maedin.mohagee.fragment.SettingFragment;
-import com.example.maedin.mohagee.item.User;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
 
@@ -36,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView userName;
     Button btnLogout;
     Button btnMypage;
+
     View headerView;
 
     @Override
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 
         setContentView(R.layout.activity_main);
 
@@ -109,14 +109,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_category:
                 manager.beginTransaction().replace(R.id.content_main, new CategoryFragment()).commit();
                 break;
-
-            case R.id.menu_custom_list:
-                manager.beginTransaction().replace(R.id.content_main, new CustomPathFragment()).commit();
+            case R.id.menu_chatting:
+                manager.beginTransaction().replace(R.id.content_main, new ChattingRoomFragment()).commit();
+                //Intent intent=new Intent(MainActivity.this,MessageListActivity.class);
+                //startActivity(intent);
                 break;
 
-            case R.id.menu_search_name:
-                manager.beginTransaction().replace(R.id.content_main, new FragmentSearchName()).commit();
-                break;
         }
 
         //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
