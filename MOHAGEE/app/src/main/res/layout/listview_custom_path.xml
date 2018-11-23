@@ -36,14 +36,15 @@
                 android:textColor="#ff9d9d"/>
 
             <TextView
-                android:layout_width="250dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="경로 이동  →  이동"
+                android:text="경로의 이름"
                 android:gravity="center_vertical"
-                android:textSize="18dp"
+                android:textSize="25dp"
                 android:textColor="#696969"
-                android:id="@+id/txt_custom_path_list"
-                android:layout_margin="15dp"/>
+                android:id="@+id/txt_custom_path_name"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="42dp"/>
 
         </LinearLayout>
 

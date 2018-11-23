@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.maedin.mohagee.R;
 import com.example.maedin.mohagee.activity.Select_Location_Activity;
@@ -22,6 +24,7 @@ import com.example.maedin.mohagee.adapter.CustomPathListAdapter;
 import com.example.maedin.mohagee.application.App;
 import com.example.maedin.mohagee.thread.ServerThread;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,13 +34,13 @@ public class CustomPathFragment extends Fragment {
 
     View view;
 
+    ArrayList<JSONObject> list;
     CustomPathListAdapter adapter;
     ListView listView;
 
     private ServerThread serverThread = ServerThread.getInstance();
     private String myResult;
 
-    ArrayList<JSONObject> list;
 
 
     @Nullable
@@ -49,64 +52,47 @@ public class CustomPathFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.list_custom_path);
 
         serverThread.setFgHandler(mHandler);
+        getCustomPathList();
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                dialogDelete(position);
-
-                return true;
-            }
-        });
 
         return view;
     }
 
 
-    private void dialogDelete(int position)
-    {
-        final LinearLayout layout = (LinearLayout) View.inflate(getContext(),R.layout.dialog_custom_path_delete, null);
-        AlertDialog.Builder dlg = new AlertDialog.Builder(getContext());
-        dlg.setTitle("커스텀 경로 삭제");
-        dlg.setCancelable(false);
-        dlg.setView(layout);
-        Button btnDelete = layout.findViewById(R.id.btn_custom_delete);
-        btnDelete.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //삭제 요청
-            }
-        });
-        Button btnCancel = layout.findViewById(R.id.btn_custom_cancel);
-        btnCancel.setOnClickListener(null);
-//        dlg.setPositiveButton("취소", null);
-        dlg.show();
-    }
-
 
     private void getCustomPathList()
     {
-
-        try {
-            JSONObject temp = new JSONObject();
-            temp.put("loc_ids","1,2,3,4");
-            temp.put("user_id","sikhye823");
-            list.add(temp);
-        }
-        catch (JSONException e)
-        {
-        }
-
-//        Message msg = new Message();
-//        msg.what = 6;
-//        serverThread.setCustomList(((App)getActivity().getApplication()).getUser().getId(),myResult);
-//        serverThread.getFgHandler().sendMessage(msg);
+        Message msg = new Message();
+        msg.what = 13;
+        serverThread.setCustomList(((App)getActivity().getApplication()).getUser().getId(),myResult);
+        serverThread.getFgHandler().sendMessage(msg);
     }
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+
+            if (msg.what == 13)
+            {
+                Log.d("Custom",msg.obj.toString());
+
+                try {
+                    JSONObject object = new JSONObject(msg.obj.toString());
+                    JSONArray array = new JSONArray(object.getString("customRoutes"));
+
+                    list = new ArrayList<>();
+                    for(int i=0; i < array.length(); i++) {
+
+                        JSONObject jObject = array.getJSONObject(i);  // JSONObject 추출
+                        list.add(jObject);
+                    }
+                    adapter = new CustomPathListAdapter(list, getContext());
+                    listView.setAdapter(adapter);
+                }
+                catch (JSONException e)
+                {
+                }
+            }
         }
     };
 
