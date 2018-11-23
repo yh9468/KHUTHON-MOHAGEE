@@ -1,6 +1,7 @@
 package com.example.maedin.mohagee.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.maedin.mohagee.R;
+import com.example.maedin.mohagee.activity.MessageListActivity;
 import com.example.maedin.mohagee.item.RoomItem;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ChattingRoomAdapter extends BaseAdapter{
@@ -55,8 +58,7 @@ public class ChattingRoomAdapter extends BaseAdapter{
         {
            @Override
             public void onClick(View v) {
-
-
+                context.startActivity(new Intent(context, MessageListActivity.class));
 
 
             }
@@ -69,7 +71,14 @@ public class ChattingRoomAdapter extends BaseAdapter{
         RoomItem temp = RoomList.get(position);
 
         room_name.setText(temp.getRoom_name());
-        room_member.setText(temp.getWith_who());
+
+        String tempstr = "";
+        ArrayList<String> strings = temp.getWith_who();
+        for(int i = 0 ; i<strings.size() ; i++)
+        {
+            tempstr = tempstr + strings.get(i) + ", ";
+        }
+        room_member.setText(tempstr);
 
         convertView.setTag(""+position);
 

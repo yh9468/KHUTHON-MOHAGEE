@@ -30,24 +30,7 @@ public class MessageListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_chatting);
 
-        t1=new BaseMessage();
-        t2=new BaseMessage();
-        t3=new BaseMessage();
-        temp=new User();
-        temp2=new User();
-        messageList=new ArrayList<>();
 
-        t1.setSender(((App)getApplication()).getUser());
-        t1.setMessage("so tired, isnt it?");
-        t1.setCreatedAt();
-        temp.setData("joohee","joohee","vic","female","980619");
-        t2.setSender(temp);
-        t2.setMessage("i agree");
-        t2.setCreatedAt();
-        temp2.setData("hiasince","HBI","hbi","male","940903");
-        t3.setSender(temp2);
-        t3.setCreatedAt();
-        t3.setMessage("iffy iffy yeah yeah");
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
         messageList.add(t1);
         messageList.add(t2);

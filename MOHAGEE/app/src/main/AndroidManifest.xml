@@ -24,7 +24,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCOQJHwpliYKsgr6-EBlaij_ZUDFU0OVFQ" />
-
+        <activity android:name=".activity.add_chatroom"/>
         <activity android:name=".activity.MainActivity">
         </activity>
         <activity android:name=".activity.search_result_Activity">

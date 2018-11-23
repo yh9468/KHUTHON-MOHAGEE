@@ -770,7 +770,7 @@ public class ServerThread extends Thread{
                         break;
                     case 17: // 채팅방 보기
                         try {
-                            URL url = new URL("http://163.180.116.251:8080/mohagi/home");
+                            URL url = new URL("http://163.180.116.251:8080/mohagi/readChatRoom");
                             HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
                             http.setDefaultUseCaches(false);
@@ -781,8 +781,13 @@ public class ServerThread extends Thread{
                             http.setRequestProperty("content-type", "application/x-www-form-urlencoded");
 
                             StringBuffer buffer = new StringBuffer();
-                            buffer.append("user_id").append("=").append(idText).append("&");
-                            buffer.append("loc_id").append("=").append(locationKey);
+                            buffer.append("user_id").append("=").append(idText);
+
+                            OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
+                            PrintWriter writer = new PrintWriter(outStream);
+                            writer.write(buffer.toString());
+                            writer.flush();
+
 
 
                             InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "UTF-8");
@@ -801,10 +806,10 @@ public class ServerThread extends Thread{
                             e.printStackTrace();
                         }
                         break;
-                    case 18:
+                    case 18:        //추가
                         try {
 
-                            URL url = new URL("http://163.180.116.251:8080/mohagi/home");
+                            URL url = new URL("http://163.180.116.251:8080/mohagi/addChatRoom");
                             HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
                             http.setDefaultUseCaches(false);
@@ -815,8 +820,18 @@ public class ServerThread extends Thread{
                             http.setRequestProperty("content-type", "application/x-www-form-urlencoded");
 
                             StringBuffer buffer = new StringBuffer();
-                            buffer.append("user_id").append("=").append(arrayList).append("&");
-                            buffer.append("chat_name").append("=").append(nameText);
+                            String tempstring = "";
+                            for(int i = 0 ; i<arrayList.size() ; i++)
+                            {
+                                tempstring += arrayList.get(i) +',';
+                            }
+                            buffer.append("room_name").append("=").append(nameText).append("&");
+                            buffer.append("user_id").append("=").append(tempstring);
+
+                            OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
+                            PrintWriter writer = new PrintWriter(outStream);
+                            writer.write(buffer.toString());
+                            writer.flush();
 
 
                             InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "UTF-8");

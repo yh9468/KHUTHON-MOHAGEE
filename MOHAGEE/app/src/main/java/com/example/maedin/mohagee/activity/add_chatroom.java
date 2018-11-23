@@ -1,5 +1,6 @@
 package com.example.maedin.mohagee.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
@@ -61,6 +62,10 @@ public class add_chatroom extends AppCompatActivity implements View.OnClickListe
                 String tempname = m_name.getText().toString();
                 serverThread.setAddroom(friend_ids, tempname, myresult);
                 serverThread.getFgHandler().sendEmptyMessage(18);
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                serverThread.getFgHandler().sendEmptyMessage(17);
+                finish();
                 break;
         }
     }
