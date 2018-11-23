@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="45dp"
+        android:text="장소검색"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@+id/txt_search"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey"
+        android:text="단어가 이름에 포함되는 장소를 검색합니다."
+        android:layout_marginBottom="50dp"
+        android:textSize="13dp"
+        android:id="@+id/txt_search"
+        android:layout_above="@+id/edit_search"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/edit_search"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/btn_search"
+        android:background="@drawable/btn_category3"
+        android:layout_alignParentBottom="true"
+        android:text="검색하기"
+        android:gravity="center"
+        android:textSize="25dp"
+        android:textColor="@color/white"/>
+
+</RelativeLayout>

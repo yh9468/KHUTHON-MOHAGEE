@@ -21,6 +21,8 @@ import com.example.maedin.mohagee.application.App;
 import com.example.maedin.mohagee.fragment.CategoryFragment;
 import com.example.maedin.mohagee.fragment.CourseSwapViewFragment;
 import com.example.maedin.mohagee.fragment.CustomFragment;
+import com.example.maedin.mohagee.fragment.CustomPathFragment;
+import com.example.maedin.mohagee.fragment.FragmentSearchName;
 import com.example.maedin.mohagee.fragment.HomeFragment;
 import com.example.maedin.mohagee.fragment.MypageFragmet;
 import com.example.maedin.mohagee.fragment.PlaceFragment;
@@ -108,8 +110,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 manager.beginTransaction().replace(R.id.content_main, new CategoryFragment()).commit();
                 break;
 
-            case R.id.menu_setting:
-                manager.beginTransaction().replace(R.id.content_main, new SettingFragment()).commit();
+            case R.id.menu_custom_list:
+                manager.beginTransaction().replace(R.id.content_main, new CustomPathFragment()).commit();
+                break;
+
+            case R.id.menu_search_name:
+                manager.beginTransaction().replace(R.id.content_main, new FragmentSearchName()).commit();
                 break;
         }
 

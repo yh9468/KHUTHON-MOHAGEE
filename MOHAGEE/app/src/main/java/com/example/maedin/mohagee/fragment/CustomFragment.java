@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.maedin.mohagee.R;
+import com.example.maedin.mohagee.activity.CustomResultActivity;
 import com.example.maedin.mohagee.activity.MainActivity;
 import com.example.maedin.mohagee.activity.SearchActivity;
 import com.example.maedin.mohagee.activity.Select_Location_Activity;
@@ -222,6 +223,7 @@ public class CustomFragment extends Fragment implements View.OnClickListener{
                 temp.put("loc_addr",checkList.get(i).getAddress());
                 temp.put("loc_time",checkList.get(i).getTime());
                 temp.put("loc_name",checkList.get(i).getName());
+                temp.put("loc_id",checkList.get(i).getId());
                 temp.put("big_ctg",checkList.get(i).getBig_cat());
                 temp.put("small_ctg",checkList.get(i).getCategory());
                 temp.put("star",checkList.get(i).getStar());
@@ -234,7 +236,7 @@ public class CustomFragment extends Fragment implements View.OnClickListener{
             newsend.put(temp);
             JSONObject json = new JSONObject();
             json.put("locations", newsend);
-            Intent intent = new Intent(getContext(), SearchActivity.class);
+            Intent intent = new Intent(getContext(), CustomResultActivity.class);
             intent.putExtra("locations", json.toString());
             getContext().startActivity(intent);
 

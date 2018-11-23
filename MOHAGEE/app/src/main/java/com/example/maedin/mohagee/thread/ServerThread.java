@@ -29,6 +29,7 @@ public class ServerThread extends Thread{
     private String genderText;
     private String locationKey;
     private String locationText;
+    private String customName, customId;
     private String lat, lon, range, category;
 
 
@@ -108,6 +109,28 @@ public class ServerThread extends Thread{
     public void setDeleteCustom(String idText, String locationKey, String myResult){
         this.idText = idText;
         this.locationKey = locationKey;
+        this.myResult = myResult;
+    }
+
+    public void setAddCustomPath(String idText, String locationKey, String customName, String myResult){
+        this.idText = idText;
+        this.locationKey = locationKey;
+        this.customName = customName;
+        this.myResult = myResult;
+    }
+
+    public void setDetailCustomPath(String locationKey, String myResult){
+        this.locationKey = locationKey;
+        this.myResult = myResult;
+    }
+
+    public void setDeleteCustomPath(String customId, String myResult){
+        this.customId = customId;
+        this.myResult = myResult;
+    }
+
+    public void setSearchName(String locationText, String myResult){
+        this.locationText = locationText;
         this.myResult = myResult;
     }
 
@@ -533,6 +556,203 @@ public class ServerThread extends Thread{
                             myResult = builder.toString();
                             retMsg.obj = myResult;
                             retMsg.what = 11;
+                            fgHandler.sendMessage(retMsg);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case 12: // 커스텀 리스트 추가
+                        try {
+                            Log.d("ServerThread", "custom path add");
+                            URL url = new URL("http://163.180.116.251:8080/mohagi/addCustomRoute");
+                            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+
+                            http.setDefaultUseCaches(false);
+                            http.setDoInput(true);
+                            http.setDoOutput(true);
+                            http.setRequestMethod("POST");
+
+                            http.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+
+                            StringBuffer buffer = new StringBuffer();
+                            buffer.append("user_id").append("=").append(idText).append("&");
+                            buffer.append("loc_ids").append("=").append(locationKey).append("&");
+                            buffer.append("custom_name").append("=").append(customName);
+
+                            OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
+                            PrintWriter writer = new PrintWriter(outStream);
+                            writer.write(buffer.toString());
+                            writer.flush();
+
+                            InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "UTF-8");
+                            BufferedReader reader = new BufferedReader(tmp);
+                            StringBuilder builder = new StringBuilder();
+                            String str;
+                            while ((str = reader.readLine()) != null) {       // 서버에서 라인단위로 보내줄 것이므로 라인단위로 읽는다
+                                builder.append(str + "\n");                     // View에 표시하기 위해 라인 구분자 추가
+                                Log.d("ServerThread", str);
+                            }
+                            myResult = builder.toString();
+                            retMsg.obj = myResult;
+                            retMsg.what = 12;
+                            fgHandler.sendMessage(retMsg);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case 13: // 커스텀 리스트 불러오기
+                        try {
+                            Log.d("ServerThread", "read custom path");
+                            URL url = new URL("http://163.180.116.251:8080/mohagi/readCustomRoute");
+                            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+
+                            http.setDefaultUseCaches(false);
+                            http.setDoInput(true);
+                            http.setDoOutput(true);
+                            http.setRequestMethod("POST");
+
+                            http.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+
+                            StringBuffer buffer = new StringBuffer();
+                            buffer.append("user_id").append("=").append(idText);
+
+                            OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
+                            PrintWriter writer = new PrintWriter(outStream);
+                            writer.write(buffer.toString());
+                            writer.flush();
+
+                            InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "UTF-8");
+                            BufferedReader reader = new BufferedReader(tmp);
+                            StringBuilder builder = new StringBuilder();
+                            String str;
+                            while ((str = reader.readLine()) != null) {       // 서버에서 라인단위로 보내줄 것이므로 라인단위로 읽는다
+                                builder.append(str + "\n");                     // View에 표시하기 위해 라인 구분자 추가
+                                Log.d("ServerThread", str);
+                            }
+                            myResult = builder.toString();
+                            retMsg.obj = myResult;
+                            retMsg.what = 13;
+                            fgHandler.sendMessage(retMsg);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case 14: // 커스텀 장소 목록 불러오기
+                        try {
+                            Log.d("ServerThread", "read custom path");
+                            URL url = new URL("http://163.180.116.251:8080/mohagi/readCustomRouteDetail");
+                            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+
+                            http.setDefaultUseCaches(false);
+                            http.setDoInput(true);
+                            http.setDoOutput(true);
+                            http.setRequestMethod("POST");
+
+                            http.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+
+                            StringBuffer buffer = new StringBuffer();
+                            buffer.append("loc_ids").append("=").append(locationKey);
+
+                            OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
+                            PrintWriter writer = new PrintWriter(outStream);
+                            writer.write(buffer.toString());
+                            writer.flush();
+
+                            InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "UTF-8");
+                            BufferedReader reader = new BufferedReader(tmp);
+                            StringBuilder builder = new StringBuilder();
+                            String str;
+                            while ((str = reader.readLine()) != null) {       // 서버에서 라인단위로 보내줄 것이므로 라인단위로 읽는다
+                                builder.append(str + "\n");                     // View에 표시하기 위해 라인 구분자 추가
+                                Log.d("ServerThread", str);
+                            }
+                            myResult = builder.toString();
+                            retMsg.obj = myResult;
+                            retMsg.what = 14;
+                            fgHandler.sendMessage(retMsg);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case 15: // 커스텀 장소 목록 불러오기
+                        try {
+                            Log.d("ServerThread", "delete custom path");
+                            URL url = new URL("http://163.180.116.251:8080/mohagi/deleteCustomRoute");
+                            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+
+                            http.setDefaultUseCaches(false);
+                            http.setDoInput(true);
+                            http.setDoOutput(true);
+                            http.setRequestMethod("POST");
+
+                            http.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+
+                            StringBuffer buffer = new StringBuffer();
+                            buffer.append("custom_id").append("=").append(customId);
+
+                            OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
+                            PrintWriter writer = new PrintWriter(outStream);
+                            writer.write(buffer.toString());
+                            writer.flush();
+
+                            InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "UTF-8");
+                            BufferedReader reader = new BufferedReader(tmp);
+                            StringBuilder builder = new StringBuilder();
+                            String str;
+                            while ((str = reader.readLine()) != null) {       // 서버에서 라인단위로 보내줄 것이므로 라인단위로 읽는다
+                                builder.append(str + "\n");                     // View에 표시하기 위해 라인 구분자 추가
+                                Log.d("ServerThread", str);
+                            }
+                            myResult = builder.toString();
+                            retMsg.obj = myResult;
+                            retMsg.what = 15;
+                            fgHandler.sendMessage(retMsg);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case 16: // 이름 검색
+                        try {
+                            Log.d("ServerThread", "delete custom path");
+                            URL url = new URL("http://163.180.116.251:8080/mohagi/searchLocation");
+                            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+
+                            http.setDefaultUseCaches(false);
+                            http.setDoInput(true);
+                            http.setDoOutput(true);
+                            http.setRequestMethod("POST");
+
+                            http.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+
+                            StringBuffer buffer = new StringBuffer();
+                            buffer.append("loc_name").append("=").append(locationText);
+
+                            OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
+                            PrintWriter writer = new PrintWriter(outStream);
+                            writer.write(buffer.toString());
+                            writer.flush();
+
+                            InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "UTF-8");
+                            BufferedReader reader = new BufferedReader(tmp);
+                            StringBuilder builder = new StringBuilder();
+                            String str;
+                            while ((str = reader.readLine()) != null) {       // 서버에서 라인단위로 보내줄 것이므로 라인단위로 읽는다
+                                builder.append(str + "\n");                     // View에 표시하기 위해 라인 구분자 추가
+                                Log.d("ServerThread", str);
+                            }
+                            myResult = builder.toString();
+                            retMsg.obj = myResult;
+                            retMsg.what = 16;
                             fgHandler.sendMessage(retMsg);
                         } catch (MalformedURLException e) {
                             e.printStackTrace();

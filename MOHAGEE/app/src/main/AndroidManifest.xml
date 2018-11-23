@@ -37,6 +37,7 @@
         </activity>
         <activity android:name=".activity.Select_Location_Activity">
         </activity>
+        <activity android:name=".activity.CustomResultActivity"/>
 
         <activity android:name=".activity.SignInActivity"
             android:theme="@style/SplashTheme">
