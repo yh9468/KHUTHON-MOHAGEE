@@ -9,6 +9,7 @@ public class User implements Parcelable {
     private String name;
     private String gender;
     private String age;
+    
 
     // private ArrayList<String> theme;
     public User(){}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/txt_custom">
+
+        <Button
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/btn_custom_map"
+            android:layout_margin="20dp"
+            android:background="@drawable/find_road_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            />
+
+        <LinearLayout
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="♥ MY CUSTOM 1"
+                android:id="@+id/txt_custom_path_num"
+                android:textColor="#ff9d9d"/>
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="경로 이동  →  이동"
+                android:gravity="center_vertical"
+                android:textSize="18dp"
+                android:textColor="#696969"
+                android:id="@+id/txt_custom_path_list"
+                android:layout_margin="15dp"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
