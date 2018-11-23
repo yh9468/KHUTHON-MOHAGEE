@@ -26,6 +26,7 @@ import com.example.maedin.mohagee.fragment.MypageFragmet;
 import com.example.maedin.mohagee.fragment.PlaceFragment;
 import com.example.maedin.mohagee.fragment.SearchFragment;
 import com.example.maedin.mohagee.fragment.SettingFragment;
+import com.example.maedin.mohagee.item.User;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
 
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView userName;
     Button btnLogout;
     Button btnMypage;
-
     View headerView;
 
     @Override
@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 
         setContentView(R.layout.activity_main);
 
